@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>39734882898-k9si5piqbbjf5hbo55uc8834lisbtthr.apps.googleusercontent.com</string>
+	<string>26431972186-p58rt5p9tvmbrdbr05kckug9at0fgmu6.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.39734882898-k9si5piqbbjf5hbo55uc8834lisbtthr</string>
+	<string>com.googleusercontent.apps.26431972186-p58rt5p9tvmbrdbr05kckug9at0fgmu6</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBQnZP_1uOwQA58gUwTrgh7MF_YPTZT22w</string>
+	<string>AIzaSyCA3Fe7uAyUdK4FRxmPei0DSnRgot7xibw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>39734882898</string>
+	<string>26431972186</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>-.FirstUIkitProject</string>
+	<string>FirstProject</string>
 	<key>PROJECT_ID</key>
-	<string>engaged-hook-331612</string>
+	<string>firstproject-ae7d7</string>
 	<key>STORAGE_BUCKET</key>
-	<string>engaged-hook-331612.appspot.com</string>
+	<string>firstproject-ae7d7.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:39734882898:ios:24d0bf79f597b01c4a258b</string>
+	<string>1:26431972186:ios:d925e6898413512ff00963</string>
+	<key>DATABASE_URL</key>
+	<string>https://firstproject-ae7d7-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>

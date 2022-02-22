@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+class DataSetup{
+    var names = FirebaseData().getNames()
+    func printNames(){
+        print(names)
+    }
+}

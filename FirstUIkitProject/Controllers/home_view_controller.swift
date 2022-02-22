@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import Kingfisher
 import UIKit
+
 var imgArray = [UIImageView(image:  UIImage(systemName: "leaf.fill")!),UIImageView(image:  UIImage(systemName: "leaf")!),UIImageView(image:  UIImage(systemName: "leaf")!),UIImageView(image:  UIImage(systemName: "leaf")!),UIImageView(image:  UIImage(systemName: "leaf")!)]
 class HomeViewController : UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         let img =  UIImage(named: "crypto")!
-        let imgView = UIImageView(image: img)
+        let imgView = UIImageView()
+        imgView.kf.setImage(with: URL(string: "https://w0.peakpx.com/wallpaper/51/52/HD-wallpaper-apex-legend-crypto-neon.jpg"))
         imgView.contentMode = .scaleAspectFill
         view.backgroundColor = .white
         view.addSubview(imgView)
