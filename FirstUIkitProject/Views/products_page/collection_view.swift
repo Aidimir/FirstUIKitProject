@@ -8,23 +8,20 @@
 import Foundation
 import UIKit
 
-class CreateCapaciousCollection : UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+class CapaciousCollectionView : UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
 
     
     var groups : Dictionary<String,Array<ProductCard>>
+    var arrays : Array<Array<ProductCard>>
     
-    func createCollection(groups : Dictionary<String,Array<ProductCard>>) -> UICollectionView{
-        let collectionView : UICollectionView = {
+    let collection : UICollectionView = {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .horizontal
-            let collection = UICollectionView()
+            let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
             collection.isPagingEnabled = true
-            collection.numberOfItems(inSection: groups.count+1)
             collection.register(CustomCell.self, forCellWithReuseIdentifier: "Custom cell")
             return collection
         }()
-        return collectionView
-    }
     func setup(collectionView : UICollectionView){
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -37,49 +34,36 @@ class CreateCapaciousCollection : UICollectionView, UICollectionViewDelegateFlow
         collectionView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        arrays.count
     }
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        groups.count
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
-    
+    func indexTitles(for collectionView: UICollectionView) -> [String]? {
+        return ["apps","Snacks","ALL"]
+    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Custom cell", for: indexPath) as! CustomCell
-        var values = convertValuesToArray(dict: groups)
-        cell.setup(collectionView: InsideCollectionView(frame: .zero, cards: values[indexPath.item] ))
+        if collectionView == collection{
+        cell.setup(cards: arrays[indexPath.row])
+        return cell
+        }
+        else{
         return cell
     }
+    }
     
-    init(frame : CGRect,groups : Dictionary<String,Array<ProductCard>>){
+    init(frame : CGRect,groups : Dictionary<String,Array<ProductCard>>, arrays : Array<Array<ProductCard>>){
         self.groups = groups
-
+        self.arrays = arrays
         super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        var collectionView = createCollection(groups: groups)
-        addSubview(collectionView)
-        setup(collectionView: collectionView)
+        addSubview(collection)
+        setup(collectionView: collection)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    private func convertValuesToArray(dict : Dictionary<String,Array<ProductCard>>)-> Array<Array<ProductCard>>{
-        var values = [Array<ProductCard>]()
-        for (key,value) in dict{
-            values.append(value as! Array<ProductCard>)
-        }
-        var allArrayValues = [Array<ProductCard>]()
-        for i in values{
-            for j in values{
-                allArrayValues.append(j)
-            }
-        }
-        var buf = [ProductCard]()
-        buf = values.last!
-        for i in (0..<values.count-1){
-            values[i] = values[i+1]
-        }
-        values[0] = buf
-        return values
     }
 }
 

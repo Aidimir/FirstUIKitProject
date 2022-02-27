@@ -30,6 +30,7 @@ class FirebaseData{
                 }
             }
             allGroups.sort()
+            allGroups.append("all")
             var dictionary : Dictionary<String,Array<ProductCard>> = [:]
             for i in allGroups{
                 dictionary[i] = []
@@ -37,6 +38,7 @@ class FirebaseData{
             for (key,value) in dict{
                 let destinationPage = UIHostingController(rootView: Page(images: [Image(systemName: "leaf.fill")], mainImage: Image(systemName: "leaf"), productName: value["name"] as! String, description: value["description"] as! String, price: value["price"] as! Int))
                 dictionary[value["group"] as! String]!.append(ProductCard(name: value["name"] as! String, image: UIImage(systemName: "leaf")!, shortdescription: value["description"] as! String, frame: .zero, destinationPage: destinationPage))
+                dictionary["all"]!.append(ProductCard(name: value["name"] as! String, image: UIImage(systemName: "leaf")!, shortdescription: value["description"] as! String, frame: .zero, destinationPage: destinationPage))
             }
             completionHandler(dictionary)
         }
