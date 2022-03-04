@@ -25,7 +25,17 @@ class InsideCollectionView : UICollectionView {
     func setup(){
         collection.delegate = self
         collection.dataSource = self
-
+        nameView.text = self.name
+        nameView.textColor = .black
+        nameView.textAlignment = .center
+        nameView.font = .boldSystemFont(ofSize: 30)
+        collection.addSubview(nameView)
+        nameView.translatesAutoresizingMaskIntoConstraints = false
+        nameView.topAnchor.constraint(equalTo: collection.safeAreaLayoutGuide.topAnchor).isActive = true
+        nameView.centerXAnchor.constraint(equalTo: collection.centerXAnchor).isActive = true
+        nameView.heightAnchor.constraint(equalTo: collection.heightAnchor, multiplier: 1/10).isActive = true
+        nameView.widthAnchor.constraint(equalTo: collection.widthAnchor).isActive = true
+        addSubview(collection)
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.topAnchor.constraint(equalTo: topAnchor).isActive = true
         collection.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
@@ -39,7 +49,6 @@ class InsideCollectionView : UICollectionView {
         self.cards = cards
         self.name = name
         super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        addSubview(collection)
         setup()
     }
     
@@ -50,18 +59,23 @@ class InsideCollectionView : UICollectionView {
 
 extension InsideCollectionView : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/2.1, height: collectionView.frame.height/2.5)
+        return CGSize(width: collectionView.frame.width/2.3, height: collectionView.frame.height/2.5)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cards.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomInsideCell
-        cell.setup(view: cards[indexPath.item])
+        var sortedCards = cards.sorted{
+            $0.name < $1.name
+        }
+        cell.setup(view: sortedCards[indexPath.item])
         return cell
     }
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//    }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = NavigationCell(frame: .zero, name: name)
+        return cell
+    }
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         scrollView.reloadInputViews()
     }

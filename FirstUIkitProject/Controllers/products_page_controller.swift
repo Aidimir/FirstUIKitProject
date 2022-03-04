@@ -17,8 +17,6 @@ class ProductsPageController : UIViewController {
         view.addSubview(scrollView)
         setup(scrollView: scrollView)
         FirebaseData().getData { dict in
-            print(dict)
-            self.scrollView.removeFromSuperview()
             self.scrollView = CapaciousScrollView(frame: .zero, groups: dict)
             self.view.addSubview(self.scrollView)
             self.setup(scrollView: self.scrollView)

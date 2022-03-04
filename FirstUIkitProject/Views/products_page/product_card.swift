@@ -16,26 +16,32 @@ class ProductCard : UIView {
     var image : UIImage
     var shortDescription : String
     var destinationPage : UIViewController
-    init(name : String, image : UIImage, shortdescription : String,frame : CGRect, destinationPage : UIViewController){
+    var price : Int
+    init(name : String, image : UIImage, shortdescription : String,frame : CGRect, destinationPage : UIViewController , price : Int){
         self.name = name
         self.image = image
         self.shortDescription = shortdescription
         self.destinationPage = destinationPage
+        self.price = price
         super.init(frame: .zero)
-        setup(image: image, name: name, shortDescription: shortDescription, destinationPage: destinationPage)
+        setup(image: image, name: name, shortDescription: shortDescription, destinationPage: destinationPage , price : price)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(image : UIImage, name : String, shortDescription : String, destinationPage : UIViewController){
+    func setup(image : UIImage, name : String, shortDescription : String, destinationPage : UIViewController , price : Int){
 
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         let nameView = UILabel()
         nameView.text = name
-        nameView.font = UIFont.boldSystemFont(ofSize: 35)
+        nameView.font = UIFont.boldSystemFont(ofSize: 30)
         nameView.textColor = .black
+        let priceView = UILabel()
+        priceView.text = "\(price) RUB"
+        priceView.textColor = .black
+        priceView.font = .boldSystemFont(ofSize: 35)
         let descriptionView = UILabel()
         descriptionView.text = shortDescription
         descriptionView.font = UIFont.systemFont(ofSize: 25)
@@ -44,6 +50,7 @@ class ProductCard : UIView {
         stack.spacing = 5
         stack.axis = .vertical
         stack.addArrangedSubview(imageView)
+        stack.addArrangedSubview(priceView)
         stack.addArrangedSubview(nameView)
         stack.addArrangedSubview(descriptionView)
         addSubview(stack)

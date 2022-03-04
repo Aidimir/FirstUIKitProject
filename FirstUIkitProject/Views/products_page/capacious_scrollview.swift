@@ -14,16 +14,15 @@ class CapaciousScrollView : UIScrollView,UIScrollViewDelegate{
     let scrollView : UIScrollView = UIScrollView()
     let stackView : UIStackView = {
         let stack = UIStackView(frame: .zero)
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
         return stack
     }()
     func setup(){
         let a = createCollections(groups: groups)
         for i in a{
             stackView.addArrangedSubview(i)
-            print(i.cards.count)
         }
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
         scrollView.isPagingEnabled = true
         view.addSubview(stackView)
         attachTo(what: stackView, toWhat: view,multiplyPages: 1)
@@ -56,6 +55,7 @@ func createCollections(groups : Dictionary<String,Array<ProductCard>>)-> Array<I
     for (key,value) in groups.sorted{$0.0<$1.0}{
         var i = InsideCollectionView(frame: .zero, cards: value, name: key)
         collections.append(i)
+        print(key,value.count)
     }
     return collections
 }

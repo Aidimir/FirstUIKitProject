@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct Page : View{
     var images : Array<Image>
@@ -20,7 +21,7 @@ struct Page : View{
                 VStack{
                     Text(productName)
                         .fontWeight(.bold)
-                        .frame(width: geometry.size.width, height: .infinity, alignment: .leading)
+                        .frame(width: geometry.size.width, height: nil, alignment: .leading)
                         .padding(Edge.Set.leading,geometry.size.width*0.02)
         TabView{
             ForEach(0..<images.count){ num in
@@ -33,7 +34,7 @@ struct Page : View{
             }
         }
         .tabViewStyle(PageTabViewStyle())
-        .frame(width: .infinity, height: geometry.size.height*0.4, alignment: .center)
+        .frame(width: nil, height: geometry.size.height*0.4, alignment: .center)
         .padding(Edge.Set.leading)
         .ignoresSafeArea(edges: Edge.Set.top)
                     Text("\(price) RUB")
@@ -41,7 +42,7 @@ struct Page : View{
                         .font(.system(size: 25))
                     ScrollView{
                 Text(description)
-                    .frame(width: geometry.size.width, height: .infinity, alignment: .leading)
+                    .frame(width: geometry.size.width, height: nil, alignment: .leading)
                     .padding(Edge.Set.top,geometry.size.height*0.02)
                     .padding(.leading,geometry.size.width*0.02)
                     }
@@ -62,7 +63,6 @@ struct Page : View{
 
             }
         }
-
     }
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
