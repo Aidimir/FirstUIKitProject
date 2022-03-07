@@ -17,6 +17,7 @@ class ProductCard : UIView {
     var shortDescription : String
     var destinationPage : UIViewController
     var price : Int
+    var view = UIView()
     init(name : String, image : UIImage, shortdescription : String,frame : CGRect, destinationPage : UIViewController , price : Int){
         self.name = name
         self.image = image
@@ -38,10 +39,13 @@ class ProductCard : UIView {
         nameView.text = name
         nameView.font = UIFont.boldSystemFont(ofSize: 30)
         nameView.textColor = .black
+        let priceView : UILabel = {
         let priceView = UILabel()
-        priceView.text = "\(price) RUB"
-        priceView.textColor = .black
-        priceView.font = .boldSystemFont(ofSize: 35)
+            priceView.text = "\(price) RUB"
+            priceView.textColor = .black
+            priceView.font = .boldSystemFont(ofSize: 35)
+            return priceView
+        }()
         let descriptionView = UILabel()
         descriptionView.text = shortDescription
         descriptionView.font = UIFont.systemFont(ofSize: 25)
@@ -49,10 +53,13 @@ class ProductCard : UIView {
         let stack = UIStackView()
         stack.spacing = 5
         stack.axis = .vertical
+        stack.distribution = .fillEqually
+        let stack1 = UIStackView(arrangedSubviews: [priceView,nameView,descriptionView])
+        stack1.axis = .vertical
+        stack1.spacing = .zero
+        stack1.distribution = .fillProportionally
         stack.addArrangedSubview(imageView)
-        stack.addArrangedSubview(priceView)
-        stack.addArrangedSubview(nameView)
-        stack.addArrangedSubview(descriptionView)
+        stack.addArrangedSubview(stack1)
         addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -76,6 +83,13 @@ class ProductCard : UIView {
     @objc func onTap(){
         let controller = getCurrentViewController()
         controller?.present(destinationPage, animated: false, completion: nil)
+    }
+    func attachTo(what : UIView, toWhat : UIView , multiplier : Double){
+        what.translatesAutoresizingMaskIntoConstraints = false
+        what.leftAnchor.constraint(equalTo: toWhat.leftAnchor).isActive = true
+        what.topAnchor.constraint(equalTo: toWhat.bottomAnchor).isActive = true
+        what.widthAnchor.constraint(equalTo: toWhat.widthAnchor).isActive = true
+        what.heightAnchor.constraint(equalTo: heightAnchor, multiplier: multiplier).isActive = true
     }
 }
 

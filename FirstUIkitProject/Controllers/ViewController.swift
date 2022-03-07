@@ -5,6 +5,6 @@ class ViewController : UITabBarController {
         super.viewDidLoad()
         self.setViewControllers(pages, animated: true)
         self.selectedViewController = pages[0]
-        self.tabBar.backgroundColor = .gray
+        tabBar.backgroundColor = .gray
     }
 }

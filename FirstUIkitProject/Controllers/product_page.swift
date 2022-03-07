@@ -10,11 +10,12 @@ import UIKit
 
 struct Page : View{
     var images : Array<Image>
-    var mainImage : Image
+    var mainImg : UIImage
     var productName : String
     var description : String
     var price : Int
     var body: some View{
+        var mainImage = Image(uiImage: mainImg)
         GeometryReader{ geometry in
                 ZStack{
             ScrollView{
@@ -35,7 +36,6 @@ struct Page : View{
         }
         .tabViewStyle(PageTabViewStyle())
         .frame(width: nil, height: geometry.size.height*0.4, alignment: .center)
-        .padding(Edge.Set.leading)
         .ignoresSafeArea(edges: Edge.Set.top)
                     Text("\(price) RUB")
                         .bold()
@@ -60,13 +60,19 @@ struct Page : View{
                             .font(.system(size: 28))
                     }
                     .position(x: geometry.size.width*0.5, y: geometry.size.height*0.95)
+                    .onTapGesture {
+                    cart.append(createCard())
+                    print("Added to cart")
+                    print(cart.count)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+
+                    }
 
             }
         }
     }
-    struct ContentView_Previews: PreviewProvider {
-        static var previews: some View {
-            Page(images: [Image(systemName: "leaf.fill"),Image(systemName: "leaf"),Image(systemName: "leaf.fill")], mainImage: Image(systemName: "leaf"), productName: "Leaf", description: "IT'S A REGULAR LEAF ! THERE IS A LOT LEAFS LIKE THAT , BUT THIS IS MINE ! WITHOUT ME MI LEAF IS NOTHING, WITHOUT LEAF NOTHING IS ME !IT'S A REGULAR LEAF ! THERE IS A LOT LEAFS LIKE THAT , BUT THIS IS MINE ! WITHOUT ME MI LEAF IS NOTHING, WITHOUT LEAF NOTHING IS ME !IT'S A REGULAR LEAF ! THERE IS A LOT LEAFS LIKE THAT , BUT THIS IS MINE ! WITHOUT ME MI LEAF IS NOTHING, WITHOUT LEAF NOTHING IS ME !", price: 1)
-        }
+    func createCard() -> ProductCard{
+        var result = ProductCard(name: productName, image: mainImg, shortdescription: description, frame: .zero, destinationPage: UIHostingController(rootView: self), price: price)
+        return result
     }
 }

@@ -10,9 +10,9 @@ import UIKit
 import SwiftUI
 
 class CartController : UIViewController{
-    static var test = [ProductCard]()
+    var tableView = TableView(frame: .zero)
     override func viewDidLoad() {
-        let tableView = TableView(frame: .zero , products: CartController.test)
+        super.viewDidLoad()
         view.addSubview(tableView)
         setup(tableView: tableView)
         title = "Cart"
@@ -20,10 +20,10 @@ class CartController : UIViewController{
     func setup(tableView : UITableView){
     tableView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([tableView.topAnchor.constraint(equalTo: view.topAnchor),
-                                 tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                                 tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                                  tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
                                  tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
                                  tableView.widthAnchor.constraint(equalTo: view.widthAnchor),
-                                 tableView.heightAnchor.constraint(equalTo: view.heightAnchor)])
+                                 tableView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.9)])
     }
 }

@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
-    var products : Array<ProductCard>
     let tableView : UITableView = {
         let tableView = UITableView()
         return tableView
@@ -19,7 +18,7 @@ class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        products.count
+        cart.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height/10
@@ -30,8 +29,19 @@ class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
-        cell.setup(card: products[indexPath.item])
+        cell.setup(card: cart[indexPath.item])
         return cell
+    }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            cart.remove(at: indexPath.row)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        }
     }
     func setup(){
         tableView.dataSource = self
@@ -46,12 +56,16 @@ class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
                                      tableView.widthAnchor.constraint(equalTo: widthAnchor),
                                      tableView.heightAnchor.constraint(equalTo: heightAnchor)])
     }
-    init(frame : CGRect, products : Array<ProductCard>){
-        self.products = products
+    init(frame : CGRect){
         super.init(frame: .zero, style: .insetGrouped)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         setup()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    @objc func loadList(notification: NSNotification){
+        //load data her
+        tableView.reloadData()
     }
 }
