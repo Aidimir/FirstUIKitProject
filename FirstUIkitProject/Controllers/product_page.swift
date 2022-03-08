@@ -59,16 +59,15 @@ struct Page : View{
                             .bold()
                             .font(.system(size: 28))
                     }
-                    .position(x: geometry.size.width*0.5, y: geometry.size.height*0.95)
-                    .onTapGesture {
-                    cart.append(createCard())
-                    print("Added to cart")
-                    print(cart.count)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-
-                    }
-
-            }
+                        .position(x: geometry.size.width*0.5, y: geometry.size.height*0.95)
+                        .onTapGesture {
+                            cart.append(createCard())
+                            print("Added to cart")
+                            print(cart.count)
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+                            UserDefaults.standard.setValue(getAllNames(array:cart), forKey: "cart")
+                        }
+                }
         }
     }
     func createCard() -> ProductCard{

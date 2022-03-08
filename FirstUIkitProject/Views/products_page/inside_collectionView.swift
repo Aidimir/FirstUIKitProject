@@ -31,7 +31,7 @@ class InsideCollectionView : UICollectionView {
         nameView.font = .boldSystemFont(ofSize: 30)
         collection.addSubview(nameView)
         nameView.translatesAutoresizingMaskIntoConstraints = false
-        nameView.topAnchor.constraint(equalTo: collection.safeAreaLayoutGuide.topAnchor).isActive = true
+        nameView.topAnchor.constraint(equalTo: collection.topAnchor).isActive = true
         nameView.centerXAnchor.constraint(equalTo: collection.centerXAnchor).isActive = true
         nameView.heightAnchor.constraint(equalTo: collection.heightAnchor, multiplier: 1/10).isActive = true
         nameView.widthAnchor.constraint(equalTo: collection.widthAnchor).isActive = true
@@ -42,7 +42,7 @@ class InsideCollectionView : UICollectionView {
         collection.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         collection.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         collection.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
-        collection.widthAnchor.constraint(equalTo: widthAnchor,multiplier: 1).isActive = true
+        collection.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
     }
 
     init(frame : CGRect,cards : Array<ProductCard>, name : String){

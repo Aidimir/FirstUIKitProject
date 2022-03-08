@@ -16,3 +16,21 @@ func getAllValuesInOneArray(dict : Dictionary<String,Array<ProductCard>>)-> Arra
     }
     return res 
 }
+func getAllProudctInOneDict(dict : Dictionary<String,Array<ProductCard>>) -> Dictionary<String,ProductCard>{
+    var res = [String:ProductCard]()
+    var all = dict["all"]
+    for (key,value) in dict{
+        for i in value{
+            res[i.name] = i
+        }
+    }
+    return res
+}
+
+func getAllNames(array : [ProductCard])-> [String]{
+    var res = [String]()
+    for i in array{
+        res.append(i.name)
+    }
+    return res
+}

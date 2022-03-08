@@ -36,10 +36,13 @@ class FirebaseData{
                 dictionary[i] = []
             }
             for (key,value) in dict{
-                var image = try! UIImage(data: Data(contentsOf: URL(string: "https://w0.peakpx.com/wallpaper/51/52/HD-wallpaper-apex-legend-crypto-neon.jpg")!))!
-                let destinationPage = UIHostingController(rootView: Page(images: [ Image(uiImage : image)], mainImg: image, productName: value["name"] as! String, description: value["description"] as! String, price: value["price"] as! Int))
-                dictionary[value["group"] as! String]!.append(ProductCard(name: value["name"] as! String, image: image, shortdescription: value["description"] as! String, frame: .zero, destinationPage: destinationPage , price: value["price"] as! Int))
-                dictionary["all"]!.append(ProductCard(name: value["name"] as! String, image: image, shortdescription: value["description"] as! String, frame: .zero, destinationPage: destinationPage , price: value["price"] as! Int))
+                let image = try! UIImage(data: Data(contentsOf: URL(string: "https://w0.peakpx.com/wallpaper/51/52/HD-wallpaper-apex-legend-crypto-neon.jpg")!))!
+                let productName = value["name"] as! String
+                let price = value["price"] as! Int
+                let destinationPage = UIHostingController(rootView: Page(images: [ Image(uiImage : image)], mainImg: image, productName: productName, description: value["description"] as! String, price: price))
+                let shortdescription = value["description"] as! String
+                dictionary[value["group"] as! String]!.append(ProductCard(name: productName, image: image, shortdescription: shortdescription, frame: .zero, destinationPage: destinationPage , price: price))
+                dictionary["all"]!.append(ProductCard(name: value["name"] as! String, image: image, shortdescription: shortdescription, frame: .zero, destinationPage: destinationPage , price: price))
             }
             completionHandler(dictionary)
         }

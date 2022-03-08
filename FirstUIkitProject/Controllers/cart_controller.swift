@@ -15,6 +15,14 @@ class CartController : UIViewController{
         super.viewDidLoad()
         view.addSubview(tableView)
         setup(tableView: tableView)
+        guard let data = UserDefaults.standard.array(forKey: "cart") as? [String] else { return }
+        FirebaseData().getData { dict in
+            var allProductsDict = getAllProudctInOneDict(dict: dict)
+            for i in data{
+                cart.append(allProductsDict[i]!)
+            }
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+        }
         title = "Cart"
     }
     func setup(tableView : UITableView){
