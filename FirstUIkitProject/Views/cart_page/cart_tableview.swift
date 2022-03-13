@@ -43,6 +43,9 @@ class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
             tableView.endUpdates()
         }
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        didSelect(productName: cart[indexPath.row].name)
+    }
     func setup(){
         tableView.dataSource = self
         tableView.delegate = self
@@ -67,5 +70,10 @@ class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
     @objc func loadList(notification: NSNotification){
         //load data her
         tableView.reloadData()
+    }
+    func didSelect(productName : String){
+        let controller = getCurrentViewController()
+        let thePage = allProducts[productName]
+        controller?.present(thePage!.destinationPage, animated: true, completion: nil)
     }
 }

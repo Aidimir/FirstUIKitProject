@@ -14,30 +14,16 @@ class InsideCollectionView : UICollectionView {
     let layout = UICollectionViewFlowLayout()
     let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.register(CustomInsideCell.self, forCellWithReuseIdentifier: "cell")
+        collection.register(NavigationCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         layout.scrollDirection = .vertical
     return collection
-    }()
-    let nameView : UILabel = {
-        let nameView = UILabel()
-        nameView.textColor = .black
-        return nameView
     }()
     func setup(){
         collection.delegate = self
         collection.dataSource = self
-        nameView.text = self.name
-        nameView.textColor = .black
-        nameView.textAlignment = .center
-        nameView.font = .boldSystemFont(ofSize: 30)
-        collection.addSubview(nameView)
-        nameView.translatesAutoresizingMaskIntoConstraints = false
-        nameView.topAnchor.constraint(equalTo: collection.topAnchor , constant: -30).isActive = true
-        nameView.centerXAnchor.constraint(equalTo: collection.centerXAnchor).isActive = true
-        nameView.heightAnchor.constraint(equalTo: collection.heightAnchor, multiplier: 1/10).isActive = true
-        nameView.widthAnchor.constraint(equalTo: collection.widthAnchor).isActive = true
         addSubview(collection)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.topAnchor.constraint(equalTo: topAnchor , constant: 40).isActive = true
+        collection.topAnchor.constraint(equalTo: topAnchor ).isActive = true
         collection.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         collection.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         collection.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
@@ -57,7 +43,7 @@ class InsideCollectionView : UICollectionView {
     }
 }
 
-extension InsideCollectionView : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+extension InsideCollectionView : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/2.3, height: collectionView.frame.height/2.5)
     }
@@ -73,11 +59,12 @@ extension InsideCollectionView : UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let cell = NavigationCell(frame: .zero, name: name)
+        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! NavigationCell
+        cell.setup(name: name)
         return cell
     }
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        scrollView.reloadInputViews()
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: frame.size.width, height: frame.size.height*0.1)
     }
 }
 

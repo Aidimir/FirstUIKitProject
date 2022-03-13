@@ -25,14 +25,22 @@ class ProductsPageController : UIViewController {
         view.backgroundColor = .white
         view.addSubview(filler)
         setup(scrollView: filler, view: view)
-        DispatchQueue.global().async {
+            if allProductsByGroups.isEmpty{
         FirebaseData().getData { dict in
             var scrollView = CapaciousScrollView(frame: .zero, groups: dict)
             self.view.addSubview(scrollView)
             self.setup(scrollView: scrollView,view: self.view)
+            allProducts = getAllProudctInOneDict(dict: dict)
             filler.removeFromSuperview()
         }
-        }
+            }
+            else{
+                var scrollView = CapaciousScrollView(frame: .zero, groups: allProductsByGroups)
+                self.view.addSubview(scrollView)
+                self.setup(scrollView: scrollView,view: self.view)
+                allProducts = getAllProudctInOneDict(dict: allProductsByGroups)
+                filler.removeFromSuperview()
+            }
         title = "Products"
     }
     func setup(scrollView : UIView , view : UIView ){

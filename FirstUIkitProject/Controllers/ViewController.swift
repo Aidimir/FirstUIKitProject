@@ -6,5 +6,9 @@ class ViewController : UITabBarController {
         self.setViewControllers(pages, animated: true)
         self.selectedViewController = pages[0]
         tabBar.backgroundColor = .gray
+        FirebaseData().getData { dict in
+            allProducts = getAllProudctInOneDict(dict: dict)
+            allProductsByGroups = dict
     }
+}
 }
