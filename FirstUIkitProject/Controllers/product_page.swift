@@ -15,7 +15,6 @@ struct Page : View{
     var description : String
     var price : Int
     var body: some View{
-        var mainImage = Image(uiImage: mainImg)
         GeometryReader{ geometry in
                 ZStack{
             ScrollView{

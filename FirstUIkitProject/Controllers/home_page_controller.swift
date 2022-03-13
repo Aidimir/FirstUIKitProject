@@ -9,7 +9,7 @@ import Foundation
 import Kingfisher
 import UIKit
 
-var imgArray = [UIImageView(image:  UIImage(systemName: "leaf.fill")!),UIImageView(image:  UIImage(systemName: "leaf")!),UIImageView(image:  UIImage(systemName: "leaf")!),UIImageView(image:  UIImage(systemName: "leaf")!),UIImageView(image:  UIImage(systemName: "leaf")!)]
+var imgArray = [UIImageView(image:  UIImage(systemName: "photo.fill")!),UIImageView(image:  UIImage(systemName: "photo")!),UIImageView(image:  UIImage(systemName: "photo")!),UIImageView(image:  UIImage(systemName: "photo")!),UIImageView(image:  UIImage(systemName: "photo")!)]
 class HomeViewController : UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()

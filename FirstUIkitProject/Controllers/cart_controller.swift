@@ -13,6 +13,7 @@ class CartController : UIViewController{
     var tableView = TableView(frame: .zero)
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(tableView)
         setup(tableView: tableView)
         guard let data = UserDefaults.standard.array(forKey: "cart") as? [String] else { return }

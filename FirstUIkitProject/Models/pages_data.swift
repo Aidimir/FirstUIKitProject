@@ -8,4 +8,4 @@
 import Foundation
 import UIKit
 
-var pages = [ ProductsPageController(),HomeViewController(), CartController()]
+var pages = [ HomeViewController(), ProductsPageController(), MapPageController() ,CartController()]

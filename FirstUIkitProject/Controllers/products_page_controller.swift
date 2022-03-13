@@ -10,25 +10,36 @@ import SwiftUI
 
 
 class ProductsPageController : UIViewController {
-    var scrollView : UIScrollView = UIScrollView()
     var cards = [ProductCard]()
     override func viewDidLoad() {
+        let filler : UIView = {
+            var filler = UIView()
+            let imgView = UIImageView(image: UIImage(systemName: "clock.circle")!)
+            imgView.contentMode = .scaleAspectFit
+            filler.addSubview(imgView)
+            filler.backgroundColor = .white
+            setup(scrollView: imgView, view: filler)
+            return filler
+        }()
         super.viewDidLoad()
-        view.addSubview(scrollView)
-        setup(scrollView: scrollView)
+        view.backgroundColor = .white
+        view.addSubview(filler)
+        setup(scrollView: filler, view: view)
+        DispatchQueue.global().async {
         FirebaseData().getData { dict in
-            self.scrollView = CapaciousScrollView(frame: .zero, groups: dict)
-            self.view.addSubview(self.scrollView)
-            self.setup(scrollView: self.scrollView)
-            self.scrollView.reloadInputViews()
+            var scrollView = CapaciousScrollView(frame: .zero, groups: dict)
+            self.view.addSubview(scrollView)
+            self.setup(scrollView: scrollView,view: self.view)
+            filler.removeFromSuperview()
+        }
         }
         title = "Products"
     }
-    func setup(scrollView : UIView){
+    func setup(scrollView : UIView , view : UIView ){
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        scrollView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        scrollView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
 }

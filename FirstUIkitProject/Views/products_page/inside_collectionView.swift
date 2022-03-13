@@ -31,13 +31,13 @@ class InsideCollectionView : UICollectionView {
         nameView.font = .boldSystemFont(ofSize: 30)
         collection.addSubview(nameView)
         nameView.translatesAutoresizingMaskIntoConstraints = false
-        nameView.topAnchor.constraint(equalTo: collection.topAnchor).isActive = true
+        nameView.topAnchor.constraint(equalTo: collection.topAnchor , constant: -30).isActive = true
         nameView.centerXAnchor.constraint(equalTo: collection.centerXAnchor).isActive = true
         nameView.heightAnchor.constraint(equalTo: collection.heightAnchor, multiplier: 1/10).isActive = true
         nameView.widthAnchor.constraint(equalTo: collection.widthAnchor).isActive = true
         addSubview(collection)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        collection.topAnchor.constraint(equalTo: topAnchor , constant: 40).isActive = true
         collection.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         collection.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         collection.rightAnchor.constraint(equalTo: rightAnchor).isActive = true

@@ -12,6 +12,7 @@ import FirebaseStorage
 import Kingfisher
 import UIKit
 import SwiftUI
+import YandexMapsMobile
 
 class FirebaseData{
     let database = Firestore.firestore()
@@ -35,16 +36,46 @@ class FirebaseData{
             for i in allGroups{
                 dictionary[i] = []
             }
-            for (key,value) in dict{
-                let image = try! UIImage(data: Data(contentsOf: URL(string: "https://w0.peakpx.com/wallpaper/51/52/HD-wallpaper-apex-legend-crypto-neon.jpg")!))!
+            for (_,value) in dict{
+                var uiImages = [UIImage]()
+                if value["images"] != nil{
+                for i in value["images"] as! Array<String>{
+                    let image = try! UIImage(data: Data(contentsOf: URL(string: i)!))!
+                    uiImages.append(image)
+                }
+                }
+                if uiImages.isEmpty{
+                    uiImages.append(UIImage(systemName: "photo")!)
+                }
                 let productName = value["name"] as! String
                 let price = value["price"] as! Int
-                let destinationPage = UIHostingController(rootView: Page(images: [ Image(uiImage : image)], mainImg: image, productName: productName, description: value["description"] as! String, price: price))
+                var images = [Image]()
+                for i in uiImages{
+                    images.append(Image(uiImage: i))
+                }
+                let destinationPage = UIHostingController(rootView: Page(images: images, mainImg: uiImages[0] , productName: productName, description: value["description"] as! String, price: price))
                 let shortdescription = value["description"] as! String
-                dictionary[value["group"] as! String]!.append(ProductCard(name: productName, image: image, shortdescription: shortdescription, frame: .zero, destinationPage: destinationPage , price: price))
-                dictionary["all"]!.append(ProductCard(name: value["name"] as! String, image: image, shortdescription: shortdescription, frame: .zero, destinationPage: destinationPage , price: price))
+                dictionary[value["group"] as! String]!.append(ProductCard(name: productName, image: uiImages[0], shortdescription: shortdescription, frame: .zero, destinationPage: destinationPage , price: price))
+                dictionary["all"]!.append(ProductCard(name: value["name"] as! String, image: uiImages[0], shortdescription: shortdescription, frame: .zero, destinationPage: destinationPage , price: price))
             }
             completionHandler(dictionary)
         }
+    }
+    func getPoints(_ completionHandler : @escaping ([Point])->Void){
+        let docRef = database.document("MarksOnMap/marks")
+        docRef.getDocument { data, error in
+            guard let data = data?.data(), error == nil else{ return }
+            let dict = data as! [String: [String:Any]]
+            var res = [Point]()
+            for (_,value) in dict{
+                var name = value["name"] as! String
+                var description = value["description"] as! String
+                var worktime = value["worktime"] as! String
+                var mapPoint = value["coordinates"] as! GeoPoint
+                res.append(Point(name: name, description: description, worktime: worktime, pointOnMap: YMKPoint(latitude: mapPoint.latitude, longitude: mapPoint.longitude)))
+            }
+            completionHandler(res)
+        }
+
     }
 }
