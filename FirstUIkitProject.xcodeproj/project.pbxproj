@@ -106,6 +106,7 @@
 		9DF6EF0827DB5D75007EC913 /* bottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bottomSheet.swift; sourceTree = "<group>"; };
 		9DF6EF0A27DE6E58007EC913 /* bottom_table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bottom_table.swift; sourceTree = "<group>"; };
 		9DF6EF0C27DE77AE007EC913 /* all_products.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = all_products.swift; sourceTree = "<group>"; };
+		9DF6EF0E27E0BA70007EC913 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		E9F298AE3779D303ECB9198E /* Pods_FirstUIkitProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FirstUIkitProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA632D8EB0AF00344E14DB47 /* Pods-FirstUIkitProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstUIkitProject.release.xcconfig"; path = "Target Support Files/Pods-FirstUIkitProject/Pods-FirstUIkitProject.release.xcconfig"; sourceTree = "<group>"; };
 		F4F3E5F20C58641EDDD4AACB /* Pods-FirstUIkitProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstUIkitProject.debug.xcconfig"; path = "Target Support Files/Pods-FirstUIkitProject/Pods-FirstUIkitProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -265,6 +266,7 @@
 				9D9DA495279B16C9000000B8 /* Assets.xcassets */,
 				9D9DA497279B16C9000000B8 /* LaunchScreen.storyboard */,
 				9D9DA49A279B16C9000000B8 /* Info.plist */,
+				9DF6EF0E27E0BA70007EC913 /* Configuration.storekit */,
 			);
 			path = FirstUIkitProject;
 			sourceTree = "<group>";

@@ -82,7 +82,7 @@ class ProductCard : UIView {
     }
     @objc func onTap(){
         let controller = getCurrentViewController()
-        controller?.present(destinationPage, animated: false, completion: nil)
+        controller?.present(destinationPage, animated: true, completion: nil)
     }
     func attachTo(what : UIView, toWhat : UIView , multiplier : Double){
         what.translatesAutoresizingMaskIntoConstraints = false

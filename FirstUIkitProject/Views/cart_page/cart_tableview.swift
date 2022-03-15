@@ -21,7 +21,7 @@ class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
         cart.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.height/10
+        return tableView.frame.height/6
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil
@@ -42,6 +42,7 @@ class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
         }
+        NotificationCenter.default.post(name: NSNotification.Name("reloadPrice"), object: nil)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         didSelect(productName: cart[indexPath.row].name)

@@ -40,8 +40,8 @@ class FirebaseData{
                 var uiImages = [UIImage]()
                 if value["images"] != nil{
                 for i in value["images"] as! Array<String>{
-                    let image = try! UIImage(data: Data(contentsOf: URL(string: i)!))!
-                    uiImages.append(image)
+                    let image = try? UIImage(data: Data(contentsOf: URL(string: i)!))  ?? UIImage(systemName: "image")
+                    uiImages.append(image!)
                 }
                 }
                 if uiImages.isEmpty{

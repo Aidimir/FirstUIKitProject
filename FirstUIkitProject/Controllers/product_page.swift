@@ -64,6 +64,7 @@ struct Page : View{
                             print("Added to cart")
                             print(cart.count)
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+                            NotificationCenter.default.post(name: NSNotification.Name("reloadPrice"), object: nil)
                             UserDefaults.standard.setValue(getAllNames(array:cart), forKey: "cart")
                         }
                 }

@@ -1,0 +1,38 @@
+{
+  "identifier" : "6F33A9B9",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0",
+      "familyShareable" : false,
+      "internalID" : "D0D1C998",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Testing",
+          "displayName" : "Testing inApp payment",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "com.bandle.test",
+      "referenceName" : "CANT DO THIS PROPERLY UNTIL WE ARE NOT IN APP STORE",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}
