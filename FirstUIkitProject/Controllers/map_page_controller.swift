@@ -17,6 +17,11 @@ class MapPageController : UIViewController, YMKMapObjectTapListener {
     }
     let viewControllerToPresent = BottomSheet()
     let mapView = YMKMapView()
+    let bottomButton : UIButton = {
+        let button = BottomMapButton().createButton()
+        button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+        return button
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(moveTo), name: NSNotification.Name("moveMap"), object: nil)
@@ -39,7 +44,6 @@ class MapPageController : UIViewController, YMKMapObjectTapListener {
         map.setMapStyleWithStyle(style)
         view.addSubview(mapView)
         setup(map: mapView)
-        createButton()
         FirebaseData().getPoints { array in
             for i in array{
                 let rect = YMKRect(min: CGPoint(x: 0, y: 0), max: CGPoint(x: 1, y: 1))
@@ -54,42 +58,33 @@ class MapPageController : UIViewController, YMKMapObjectTapListener {
                 cameraCallback: nil)
             NotificationCenter.default.post(name: NSNotification.Name("reloadBottomSheet"), object: nil)
         }
+        view.addSubview(bottomButton)
+        buttonSetup(button: bottomButton)
         map.move(
             with: YMKCameraPosition.init(target: defaultLocation, zoom: 10, azimuth: 0, tilt: 0),
             animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 0),
             cameraCallback: nil)
         title = "Map"
     }
-    @objc func setup(map : UIView){
+    func setup(map : UIView){
         map.translatesAutoresizingMaskIntoConstraints = false
         map.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         map.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
-    @objc func moveTo(notification : NSNotification){
-        mapView.mapWindow.map.move(
-            with: YMKCameraPosition.init(target: notification.object as! YMKPoint, zoom: 15, azimuth: 0, tilt: 0),
-            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 1),
-            cameraCallback: nil)
-    }
-    func createButton(){
-        let imageView = UIImageView(image: UIImage(systemName: "chevron.compact.up")!)
-        imageView.contentMode = .scaleAspectFit
-        let button = UIButton()
-        button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
-        button.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalTo: button.widthAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalTo: button.heightAnchor).isActive = true
-        view.addSubview(button)
+    func buttonSetup(button : UIButton){
         button.translatesAutoresizingMaskIntoConstraints = false
         button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -view.frame.height*0.09).isActive = true
         button.widthAnchor.constraint(equalTo: view.widthAnchor , multiplier: 0.4).isActive = true
         button.heightAnchor.constraint(equalTo: view.heightAnchor , multiplier: 0.06).isActive = true
+    }
+    @objc func moveTo(notification : NSNotification){
+        mapView.mapWindow.map.move(
+            with: YMKCameraPosition.init(target: notification.object as! YMKPoint, zoom: 15, azimuth: 0, tilt: 0),
+            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 1),
+            cameraCallback: nil)
     }
     @objc func onTap(){
         if let sheet = viewControllerToPresent.sheetPresentationController{
