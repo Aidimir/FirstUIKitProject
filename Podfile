@@ -10,6 +10,7 @@ target 'FirstUIkitProject' do
 pod 'Firebase/Auth'
 pod 'Firebase/Storage'
   pod 'Kingfisher'
+	pod 'SnapKit'
 
   # Pods for FirstUIkitProject
 

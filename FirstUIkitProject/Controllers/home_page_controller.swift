@@ -10,7 +10,7 @@ import Kingfisher
 import UIKit
 
 var imgArray = [UIImageView(image:  UIImage(systemName: "photo.fill")!),UIImageView(image:  UIImage(systemName: "photo")!),UIImageView(image:  UIImage(systemName: "photo")!),UIImageView(image:  UIImage(systemName: "photo")!),UIImageView(image:  UIImage(systemName: "photo")!)]
-class HomeViewController : UIViewController, UIScrollViewDelegate {
+class HomeViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let img =  UIImage(named: "crypto")!
@@ -26,7 +26,6 @@ class HomeViewController : UIViewController, UIScrollViewDelegate {
         imgView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         title = "Home"
         let a = MainScrollSells(sellsArray: imgArray)
-        a.delegate = self
         a.backgroundColor = .white
         view.addSubview(a)
         a.translatesAutoresizingMaskIntoConstraints = false

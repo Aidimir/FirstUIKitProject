@@ -12,6 +12,7 @@ import StoreKit
 class CartController : UIViewController {
     var test = [SKProduct]()
     var tableView = TableView(frame: .zero)
+    var dict : [String:[ProductCard]]?
     var label : UILabel = {
     var label = UILabel()
         label.font = .boldSystemFont(ofSize: 40)
@@ -27,24 +28,15 @@ class CartController : UIViewController {
         view.addSubview(tableView)
         setup(tableView: tableView)
         guard let data = UserDefaults.standard.array(forKey: "cart") as? [String] else { return }
-        if allProducts.isEmpty{
-            DispatchQueue.main.async {
-        FirebaseData().getData { dict in
-            var allProductsDict = getAllProudctInOneDict(dict: dict)
-            for i in data{
-                cart.append(allProductsDict[i]!)
-            }
-        }
-            }
-        }
-        else{
-            for i in data{
-                cart.append(allProducts[i]!)
-            }
+        var allProductsDict = getAllProudctInOneDict(dict: dict!)
+        allProducts = allProductsDict
+        for i in data{
+            cart.append(allProducts[i]!)
         }
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         var button = createButton(prodCart: cart)
         label.text = "К оплате: \(getPriceForAll(productsInCart: cart)) RUB"
+        label.textAlignment = .center
         button.addSubview(label)
         attachTo(what: label, toWhat: button, multiplyPages: 1)
         view.addSubview(button)
@@ -68,7 +60,7 @@ class CartController : UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                                     button.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+                                     button.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95),
         button.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1)])
     }
     func createButton(prodCart : Array<ProductCard>) -> UIView{
@@ -79,6 +71,7 @@ class CartController : UIViewController {
             return button
         }()
         buttonView.backgroundColor = .black
+        buttonView.layer.cornerRadius = 20
         buttonView.addSubview(button)
         attachTo(what: button, toWhat: buttonView, multiplyPages: 1)
         return buttonView

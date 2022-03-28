@@ -10,7 +10,8 @@ import SwiftUI
 
 
 class ProductsPageController : UIViewController {
-    var cards = [ProductCard]()
+    var dict: Dictionary<String, Array<ProductCard>>?
+    
     let spinner = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,27 +19,13 @@ class ProductsPageController : UIViewController {
         view.backgroundColor = .white
         view.addSubview(spinner)
         setup(scrollView: spinner, view: view)
-            if allProductsByGroups.isEmpty{
-                DispatchQueue.main.async {
-        FirebaseData().getData { dict in
-            var scrollView = CapaciousScrollView(frame: .zero, groups: dict)
-            self.view.addSubview(scrollView)
-            self.setup(scrollView: scrollView,view: self.view)
-            allProducts = getAllProudctInOneDict(dict: dict)
-            self.spinner.stopAnimating()
-            self.spinner.removeFromSuperview()
-        }
-                }
-            }
-            else{
-                var scrollView = CapaciousScrollView(frame: .zero, groups: allProductsByGroups)
-                self.view.addSubview(scrollView)
-                self.setup(scrollView: scrollView,view: self.view)
-                allProducts = getAllProudctInOneDict(dict: allProductsByGroups)
-                spinner.stopAnimating()
-                spinner.removeFromSuperview()
-            }
         title = "Products"
+        var scrollView = CapaciousScrollView(frame: .zero, groups: dict!)
+        self.view.addSubview(scrollView)
+        self.setup(scrollView: scrollView,view: self.view)
+        allProducts = getAllProudctInOneDict(dict: dict!)
+        self.spinner.stopAnimating()
+        self.spinner.removeFromSuperview()
     }
     func setup(scrollView : UIView , view : UIView ){
         scrollView.translatesAutoresizingMaskIntoConstraints = false

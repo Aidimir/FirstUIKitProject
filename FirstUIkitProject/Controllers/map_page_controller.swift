@@ -17,6 +17,7 @@ class MapPageController : UIViewController, YMKMapObjectTapListener {
     }
     let viewControllerToPresent = BottomSheet()
     let mapView = YMKMapView()
+    var allPoints : [Point]?
     let bottomButton : UIButton = {
         let button = BottomMapButton().createButton()
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
@@ -41,23 +42,21 @@ class MapPageController : UIViewController, YMKMapObjectTapListener {
        }
        ]
        """
+        points = allPoints!
+        for i in allPoints!{
+            let rect = YMKRect(min: CGPoint(x: 0, y: 0), max: CGPoint(x: 1, y: 1))
+            var placeMark = mapObjects.addPlacemark(with: i.pointOnMap, image: UIImage(systemName: "rhombus.fill")!, style: YMKIconStyle(anchor: nil, rotationType: 1, zIndex: nil, flat: 1, visible: 1, scale: 2.5, tappableArea: rect))
+            placeMark.addTapListener(with: self)
+            
+        }
+        map.move(
+            with: YMKCameraPosition(target: points[0].pointOnMap, zoom: 10, azimuth: 0, tilt: 0),
+            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 3),
+            cameraCallback: nil)
         map.setMapStyleWithStyle(style)
         view.addSubview(mapView)
         setup(map: mapView)
-        FirebaseData().getPoints { array in
-            for i in array{
-                let rect = YMKRect(min: CGPoint(x: 0, y: 0), max: CGPoint(x: 1, y: 1))
-                var placeMark = mapObjects.addPlacemark(with: i.pointOnMap, image: UIImage(systemName: "rhombus.fill")!, style: YMKIconStyle(anchor: nil, rotationType: 1, zIndex: nil, flat: 1, visible: 1, scale: 2.5, tappableArea: rect))
-                placeMark.addTapListener(with: self)
-                
-            }
-            points = array
-            map.move(
-                with: YMKCameraPosition(target: points[0].pointOnMap, zoom: 10, azimuth: 0, tilt: 0),
-                animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 3),
-                cameraCallback: nil)
             NotificationCenter.default.post(name: NSNotification.Name("reloadBottomSheet"), object: nil)
-        }
         view.addSubview(bottomButton)
         buttonSetup(button: bottomButton)
         map.move(
