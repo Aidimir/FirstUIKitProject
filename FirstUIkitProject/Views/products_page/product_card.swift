@@ -35,6 +35,9 @@ class ProductCard : UIView {
 
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.25)
+        imageView.layer.cornerRadius = 20
+        imageView.layer.masksToBounds = true
         let nameView = UILabel()
         nameView.text = name
         nameView.font = UIFont.boldSystemFont(ofSize: 30)

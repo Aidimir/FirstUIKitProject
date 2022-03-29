@@ -12,7 +12,7 @@ import StoreKit
 class CartController : UIViewController {
     var test = [SKProduct]()
     var tableView = TableView(frame: .zero)
-    var dict : [String:[ProductCard]]?
+    var dict : [String:[ProductCard]]
     var label : UILabel = {
     var label = UILabel()
         label.font = .boldSystemFont(ofSize: 40)
@@ -28,7 +28,7 @@ class CartController : UIViewController {
         view.addSubview(tableView)
         setup(tableView: tableView)
         guard let data = UserDefaults.standard.array(forKey: "cart") as? [String] else { return }
-        var allProductsDict = getAllProudctInOneDict(dict: dict!)
+        var allProductsDict = getAllProudctInOneDict(dict: dict)
         allProducts = allProductsDict
         for i in data{
             cart.append(allProducts[i]!)
@@ -80,6 +80,14 @@ class CartController : UIViewController {
         print("You did tap the PAY button")
         let payment = SKPayment(product: test[0])
         SKPaymentQueue.default().add(payment)
+    }
+    init(dict : [String:[ProductCard]]){
+        self.dict = dict
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 func attachTo(what : UIView, toWhat : UIView, multiplyPages : Int){

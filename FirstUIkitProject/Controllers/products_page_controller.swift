@@ -10,7 +10,7 @@ import SwiftUI
 
 
 class ProductsPageController : UIViewController {
-    var dict: Dictionary<String, Array<ProductCard>>?
+    var dict: Dictionary<String, Array<ProductCard>>
     
     let spinner = UIActivityIndicatorView()
     override func viewDidLoad() {
@@ -20,10 +20,10 @@ class ProductsPageController : UIViewController {
         view.addSubview(spinner)
         setup(scrollView: spinner, view: view)
         title = "Products"
-        var scrollView = CapaciousScrollView(frame: .zero, groups: dict!)
+        var scrollView = CapaciousScrollView(frame: .zero, groups: dict)
         self.view.addSubview(scrollView)
         self.setup(scrollView: scrollView,view: self.view)
-        allProducts = getAllProudctInOneDict(dict: dict!)
+        allProducts = getAllProudctInOneDict(dict: dict)
         self.spinner.stopAnimating()
         self.spinner.removeFromSuperview()
     }
@@ -33,5 +33,13 @@ class ProductsPageController : UIViewController {
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    init(dict: Dictionary<String, Array<ProductCard>>){
+        self.dict = dict
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
