@@ -41,18 +41,18 @@ class ProductCard : UIView {
         let nameView = UILabel()
         nameView.text = name
         nameView.font = UIFont.boldSystemFont(ofSize: 30)
-        nameView.textColor = .black
+        nameView.textColor = .white
         let priceView : UILabel = {
         let priceView = UILabel()
             priceView.text = "\(price) RUB"
-            priceView.textColor = .black
+            priceView.textColor = .white
             priceView.font = .boldSystemFont(ofSize: 35)
             return priceView
         }()
         let descriptionView = UILabel()
         descriptionView.text = shortDescription
         descriptionView.font = UIFont.systemFont(ofSize: 25)
-        descriptionView.textColor = .black
+        descriptionView.textColor = .white
         let stack = UIStackView()
         stack.spacing = 5
         stack.axis = .vertical

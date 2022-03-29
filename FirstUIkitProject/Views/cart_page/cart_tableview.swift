@@ -8,9 +8,10 @@
 import Foundation
 import UIKit
 
-class TableView : UITableView, UITableViewDataSource, UITableViewDelegate {
+class TableView : UITableView, UITableViewDataSource, UITableViewDelegate{
     let tableView : UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .black
         return tableView
     }()
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -72,6 +72,7 @@ class CartController : UIViewController {
         }()
         buttonView.backgroundColor = .black
         buttonView.layer.cornerRadius = 20
+        buttonView.layer.masksToBounds = true
         buttonView.addSubview(button)
         attachTo(what: button, toWhat: buttonView, multiplyPages: 1)
         return buttonView

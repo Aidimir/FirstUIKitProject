@@ -172,7 +172,6 @@
 			children = (
 				9D9DA4C0279C0389000000B8 /* product_card.swift */,
 				9D31F63B27C5262600ECBBD1 /* custom_insideCollectionView_cell.swift */,
-				9D31F63F27C52D4800ECBBD1 /* inside_collectionView.swift */,
 				9D31F64427C9476700ECBBD1 /* capacious_scrollview.swift */,
 				9D31F64727CBED1B00ECBBD1 /* navigation_collectionCell.swift */,
 			);
@@ -200,6 +199,7 @@
 		9D4D061127C2273E0050DE35 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9D31F63F27C52D4800ECBBD1 /* inside_collectionView.swift */,
 				9D9DA4BC279B1839000000B8 /* product_page.swift */,
 				9D9DA490279B16C7000000B8 /* ViewController.swift */,
 				9D9DA4C427A9DA37000000B8 /* home_page_controller.swift */,

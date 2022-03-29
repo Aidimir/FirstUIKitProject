@@ -13,6 +13,7 @@ class NavigationCell : UICollectionReusableView{
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 60)
         label.text = name
+        label.textColor = .white
         addSubview(label)
         label.frame = bounds
     }

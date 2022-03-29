@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-class CapaciousScrollView : UIScrollView,UIScrollViewDelegate{
+class CapaciousScrollView : UIViewController,UIScrollViewDelegate{
     var groups : Dictionary<String,Array<ProductCard>>
-    let view : UIView = UIView()
+    let massiveView : UIView = UIView()
     let scrollView : UIScrollView = UIScrollView()
     let stackView : UIStackView = {
         let stack = UIStackView(frame: .zero)
@@ -19,17 +19,21 @@ class CapaciousScrollView : UIScrollView,UIScrollViewDelegate{
         return stack
     }()
     func setup(){
+        scrollView.backgroundColor = .black
         let a = createCollections(groups: groups)
         for i in a{
-            stackView.addArrangedSubview(i)
+            i.view.frame = view.bounds
+            addChild(i)
+            i.didMove(toParent: self)
+            stackView.addArrangedSubview(i.view)
         }
         scrollView.isPagingEnabled = true
-        view.addSubview(stackView)
-        attachTo(what: stackView, toWhat: view,multiplyPages: 1)
-        scrollView.addSubview(view)
-        attachTo(what: view, toWhat: scrollView, multiplyPages: groups.count)
-        addSubview(scrollView)
-        attachTo(what: scrollView, toWhat: self, multiplyPages: 1)
+        massiveView.addSubview(stackView)
+        attachTo(what: stackView, toWhat: massiveView,multiplyPages: 1)
+        scrollView.addSubview(massiveView)
+        attachTo(what: massiveView, toWhat: scrollView, multiplyPages: groups.count)
+        view.addSubview(scrollView)
+        attachTo(what: scrollView, toWhat: view, multiplyPages: 1)
     }
     func attachTo(what : UIView, toWhat : UIView, multiplyPages : Int){
         what.translatesAutoresizingMaskIntoConstraints = false
@@ -40,14 +44,17 @@ class CapaciousScrollView : UIScrollView,UIScrollViewDelegate{
         what.heightAnchor.constraint(equalTo: toWhat.heightAnchor).isActive = true
         what.widthAnchor.constraint(equalTo: toWhat.widthAnchor,multiplier: CGFloat(multiplyPages)).isActive = true
     }
-    init(frame: CGRect, groups : Dictionary<String,Array<ProductCard>>){
+    init(groups : Dictionary<String,Array<ProductCard>>){
         self.groups = groups
-        super.init(frame: .zero)
-        setup()
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
     }
 }
 func createCollections(groups : Dictionary<String,Array<ProductCard>>)-> Array<InsideCollectionView>{
