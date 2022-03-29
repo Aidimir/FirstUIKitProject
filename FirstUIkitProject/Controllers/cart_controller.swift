@@ -8,10 +8,11 @@
 import Foundation
 import UIKit
 import StoreKit
+import SnapKit
 
 class CartController : UIViewController {
     var test = [SKProduct]()
-    var tableView = TableView(frame: .zero)
+    var tableView = TableView()
     var dict : [String:[ProductCard]]
     var label : UILabel = {
     var label = UILabel()
@@ -22,11 +23,18 @@ class CartController : UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+        label.font = .boldSystemFont(ofSize: 30)
+        label.adjustsFontSizeToFitWidth = true
+        addChild(tableView)
+        tableView.didMove(toParent: self)
         SKPaymentQueue.default().add(self)
         fetchProducts()
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        setup(tableView: tableView)
+        view.backgroundColor = .black
+        view.addSubview(tableView.view)
+        tableView.view.snp.makeConstraints { make in
+            make.left.right.top.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.8)
+        }
         guard let data = UserDefaults.standard.array(forKey: "cart") as? [String] else { return }
         var allProductsDict = getAllProudctInOneDict(dict: dict)
         allProducts = allProductsDict
@@ -34,36 +42,28 @@ class CartController : UIViewController {
             cart.append(allProducts[i]!)
         }
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-        var button = createButton(prodCart: cart)
+        var button = createButton()
         label.text = "К оплате: \(getPriceForAll(productsInCart: cart)) RUB"
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         button.addSubview(label)
-        attachTo(what: label, toWhat: button, multiplyPages: 1)
+        label.snp.makeConstraints { make in
+            make.left.right.top.bottom.width.height.equalTo(button)
+        }
         view.addSubview(button)
-        setupButtonView(button: button)
+        button.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.snp.bottomMargin)
+            make.width.equalToSuperview().multipliedBy(0.95)
+            make.height.equalToSuperview().multipliedBy(0.1)
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPriceText), name: NSNotification.Name("reloadPrice"), object: nil)
         title = "Cart"
     }
     @objc func reloadPriceText(notification : NSNotification){
         label.text = "К оплате: \(getPriceForAll(productsInCart: cart)) RUB"
     }
-    func setup(tableView : UITableView){
-    tableView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([tableView.topAnchor.constraint(equalTo: view.topAnchor),
-                                 tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-                                 tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-                                 tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-                                 tableView.widthAnchor.constraint(equalTo: view.widthAnchor),
-                                 tableView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.8)])
-    }
-    func setupButtonView(button : UIView){
-        button.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                                     button.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95),
-        button.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1)])
-    }
-    func createButton(prodCart : Array<ProductCard>) -> UIView{
+    func createButton() -> UIView{
         let buttonView = UIView()
         let button : UIButton = {
             let button = UIButton()
@@ -73,8 +73,11 @@ class CartController : UIViewController {
         buttonView.backgroundColor = .black
         buttonView.layer.cornerRadius = 20
         buttonView.layer.masksToBounds = true
+        buttonView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.25)
         buttonView.addSubview(button)
-        attachTo(what: button, toWhat: buttonView, multiplyPages: 1)
+        button.snp.makeConstraints { make in
+            make.left.right.top.bottom.width.height.equalTo(buttonView)
+        }
         return buttonView
     }
     @objc func onTap(){
@@ -90,15 +93,6 @@ class CartController : UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-func attachTo(what : UIView, toWhat : UIView, multiplyPages : Int){
-    what.translatesAutoresizingMaskIntoConstraints = false
-    what.topAnchor.constraint(equalTo: toWhat.topAnchor).isActive = true
-    what.bottomAnchor.constraint(equalTo: toWhat.bottomAnchor).isActive = true
-    what.leftAnchor.constraint(equalTo: toWhat.leftAnchor).isActive = true
-    what.rightAnchor.constraint(equalTo: toWhat.rightAnchor).isActive = true
-    what.heightAnchor.constraint(equalTo: toWhat.heightAnchor).isActive = true
-    what.widthAnchor.constraint(equalTo: toWhat.widthAnchor,multiplier: CGFloat(multiplyPages)).isActive = true
 }
 func getPriceForAll(productsInCart: Array<ProductCard>) -> Int{
     var summ = 0

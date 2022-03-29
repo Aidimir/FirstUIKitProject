@@ -12,7 +12,7 @@ class Header : UITableViewHeaderFooterView{
     var headerName : UILabel = {
         let headerName = UILabel()
         headerName.font = .boldSystemFont(ofSize: 40)
-        headerName.textColor = .black
+        headerName.textColor = .white
         return headerName
     }()
     func setup(headerText : String) -> UIView{

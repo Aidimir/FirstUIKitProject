@@ -7,36 +7,32 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
-class TableView : UITableView, UITableViewDataSource, UITableViewDelegate{
-    let tableView : UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .black
-        return tableView
-    }()
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+class TableView : UITableViewController{
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = Header().setup(headerText: "Cart")
         return cell
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         cart.count
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height/6
     }
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
         cell.setup(card: cart[indexPath.item])
         return cell
     }
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
             cart.remove(at: indexPath.row)
             tableView.beginUpdates()
@@ -45,26 +41,14 @@ class TableView : UITableView, UITableViewDataSource, UITableViewDelegate{
         }
         NotificationCenter.default.post(name: NSNotification.Name("reloadPrice"), object: nil)
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         didSelect(productName: cart[indexPath.row].name)
     }
-    func setup(){
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
-        addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([tableView.topAnchor.constraint(equalTo: topAnchor),
-                                     tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-                                     tableView.leftAnchor.constraint(equalTo: leftAnchor),
-                                     tableView.rightAnchor.constraint(equalTo: rightAnchor),
-                                     tableView.widthAnchor.constraint(equalTo: widthAnchor),
-                                     tableView.heightAnchor.constraint(equalTo: heightAnchor)])
-    }
-    init(frame : CGRect){
-        super.init(frame: .zero, style: .insetGrouped)
+    init(){
+        super.init(style: .insetGrouped)
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
-        setup()
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.backgroundColor = .black
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

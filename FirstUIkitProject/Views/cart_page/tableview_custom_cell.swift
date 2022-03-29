@@ -7,11 +7,13 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class TableViewCell : UITableViewCell{
     let hstack : UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
+        stack.backgroundColor = .black
         return stack
     }()
     let vstack : UIStackView = {
@@ -21,7 +23,7 @@ class TableViewCell : UITableViewCell{
         stack.distribution = .fillEqually
         return stack
     }()
-    let imgView : UIImageView = {
+    var imgView : UIImageView = {
         let imgView = UIImageView(image : UIImage())
         imgView.contentMode = .scaleAspectFit
         return imgView
@@ -29,47 +31,50 @@ class TableViewCell : UITableViewCell{
     let nameView : UILabel = {
         let nameView = UILabel()
         nameView.font = .boldSystemFont(ofSize: 30)
-        nameView.textColor = .black
+        nameView.adjustsFontSizeToFitWidth = true
+        nameView.textColor = .white
         return nameView
     }()
     let discriptionView : UILabel = {
         let nameView = UILabel()
         nameView.font = .boldSystemFont(ofSize: 25)
-        nameView.textColor = .black
+        nameView.adjustsFontSizeToFitWidth = true
+        nameView.textColor = .white
         return nameView
     }()
     let priceView : UILabel = {
         let nameView = UILabel()
+        nameView.adjustsFontSizeToFitWidth = true
         nameView.font = .boldSystemFont(ofSize: 30)
-        nameView.textColor = .black
+        nameView.textColor = .white
         return nameView
     }()
     func setup(card : ProductCard){
         imgView.image = card.image
+        imgView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.25)
         nameView.text = card.name
         discriptionView.text = card.shortDescription
         priceView.text = String(card.price) + " RUB"
         hstack.addArrangedSubview(imgView)
-        imgView.translatesAutoresizingMaskIntoConstraints = false
-        imgView.leftAnchor.constraint(equalTo: hstack.leftAnchor).isActive = true
-        imgView.centerYAnchor.constraint(equalTo: hstack.centerYAnchor).isActive = true
-        imgView.widthAnchor.constraint(equalTo: hstack.widthAnchor, multiplier: 1/5).isActive = true
-        imgView.heightAnchor.constraint(equalTo: hstack.heightAnchor).isActive = true
+        imgView.snp.makeConstraints { make in
+            make.left.top.bottom.height.equalTo(hstack)
+            make.width.equalTo(hstack).multipliedBy(0.32)
+        }
         hstack.addArrangedSubview(vstack)
-        vstack.translatesAutoresizingMaskIntoConstraints = false
-        vstack.leftAnchor.constraint(equalTo: imgView.rightAnchor).isActive = true
-        vstack.centerYAnchor.constraint(equalTo: imgView.centerYAnchor).isActive = true
-        vstack.widthAnchor.constraint(equalTo: hstack.widthAnchor, multiplier: 2.4/5).isActive = true
-        vstack.heightAnchor.constraint(equalTo: hstack.heightAnchor).isActive = true
+        vstack.snp.makeConstraints { make in
+            make.centerY.height.equalTo(hstack)
+            make.left.equalTo(imgView.snp.right)
+            make.width.equalTo(hstack).multipliedBy(0.48)
+        }
         vstack.addArrangedSubview(nameView)
         vstack.addArrangedSubview(discriptionView)
         hstack.addArrangedSubview(priceView)
-        priceView.translatesAutoresizingMaskIntoConstraints = false
-        priceView.leftAnchor.constraint(equalTo: vstack.rightAnchor).isActive = true
-        priceView.centerYAnchor.constraint(equalTo: vstack.centerYAnchor).isActive = true
-        priceView.widthAnchor.constraint(equalTo: hstack.widthAnchor, multiplier: 1.6/5).isActive = true
-        priceView.heightAnchor.constraint(equalTo: hstack.heightAnchor).isActive = true
-        vstack.frame = contentView.bounds
+        priceView.snp.makeConstraints { make in
+            make.right.equalTo(hstack.snp.right)
+            make.centerY.equalTo(vstack)
+            make.width.equalTo(hstack).multipliedBy(0.2)
+            make.height.equalTo(hstack)
+        }
         addSubview(hstack)
         hstack.frame = contentView.bounds
     }
