@@ -3,7 +3,8 @@ import Kingfisher
 import SnapKit
 class ViewController : UITabBarController, ProductsPresenterDelegate {
     func presentProducts(dict: Dictionary<String, Array<ProductCard>>, allPoints : [Point]) {
-        let home = HomeViewController()
+        spinner.removeFromSuperview()
+        let home = HomeViewController(itemsToShow: getNewInstances(array: getRandomPos(dict: dict)))
         let productsPage = ProductsPageController(dict: dict)
         let mapPage = MapPageController()
         mapPage.allPoints = allPoints
@@ -14,6 +15,7 @@ class ViewController : UITabBarController, ProductsPresenterDelegate {
         tabBar.backgroundColor = .gray
     }
     func errorHandler() {
+        spinner.removeFromSuperview()
         print("error handler in action")
         let scroll = UIScrollView()
         let errorImvView : UIImageView = {
@@ -54,16 +56,39 @@ class ViewController : UITabBarController, ProductsPresenterDelegate {
             make.left.right.top.bottom.width.height.equalToSuperview()
         }
     }
-    
+    private let spinner = UIActivityIndicatorView()
     private let presenter = ProductsPresenter()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(spinner)
+        spinner.tintColor = .white
+        spinner.startAnimating()
+        spinner.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
         presenter.setDelegate(delegate: self)
         presenter.fetchData()
     }
     @objc func reloadAll(sender : UIRefreshControl){
         view.subviews.forEach({ $0.removeFromSuperview() })
         presenter.fetchData()
+    }
+    func getRandomPos(dict : [String:[ProductCard]]) -> [ProductCard]{
+        var res = [ProductCard]()
+        for i in 0...3{
+            var randomEl = dict["all"]!.randomElement()
+            if res.contains(randomEl!) == false{
+                res.append(randomEl!)
+            }
+        }
+        return res
+    }
+    func getNewInstances(array : [ProductCard]) ->[ProductCard]{
+        var res = [ProductCard]()
+        for i in array{
+            res.append(ProductCard(name: i.name, image: i.image, shortdescription: i.shortDescription, frame: i.frame, destinationPage: i.destinationPage, price: i.price))
+        }
+        return res
     }
 }
 

@@ -38,7 +38,6 @@ class TableViewCell : UITableViewCell{
     let discriptionView : UILabel = {
         let nameView = UILabel()
         nameView.font = .boldSystemFont(ofSize: 25)
-        nameView.adjustsFontSizeToFitWidth = true
         nameView.textColor = .white
         return nameView
     }()

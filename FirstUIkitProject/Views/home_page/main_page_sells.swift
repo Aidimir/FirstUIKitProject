@@ -27,6 +27,7 @@ class MainScrollSells : UIScrollView{
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         for i in content{
+            i.tintColor = .black
             i.contentMode = .scaleAspectFit
             stackView.addArrangedSubview(i)
         }

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-class ProductCard : UIView {
+class ProductCard : UIView{
     var screenWidth = UIScreen.main.bounds.width
     var screenHeight = UIScreen.main.bounds.height
     var name : String
@@ -30,9 +30,7 @@ class ProductCard : UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     func setup(image : UIImage, name : String, shortDescription : String, destinationPage : UIViewController , price : Int){
-
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.25)
@@ -43,7 +41,7 @@ class ProductCard : UIView {
         nameView.font = UIFont.boldSystemFont(ofSize: 30)
         nameView.textColor = .white
         let priceView : UILabel = {
-        let priceView = UILabel()
+            let priceView = UILabel()
             priceView.text = "\(price) RUB"
             priceView.textColor = .white
             priceView.font = .boldSystemFont(ofSize: 35)
@@ -76,7 +74,7 @@ class ProductCard : UIView {
         button.bottomAnchor.constraint(equalTo: stack.bottomAnchor).isActive = true
         button.leftAnchor.constraint(equalTo: stack.leftAnchor).isActive = true
         button.rightAnchor.constraint(equalTo: stack.rightAnchor).isActive = true
-
+        
     }
     func createButton(destinationPage : UIViewController)-> UIButton{
         let button = UIButton()
@@ -96,16 +94,22 @@ class ProductCard : UIView {
     }
 }
 
+extension UIView
+{
+    func copyView<T: UIView>() -> T {
+        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! T
+    }
+}
 
 func getCurrentViewController() -> UIViewController? {
-
-   if let rootController = UIApplication.shared.keyWindow?.rootViewController {
-       var currentController: UIViewController! = rootController
-       while( currentController.presentedViewController != nil ) {
-           currentController = currentController.presentedViewController
-       }
-       return currentController
-   }
-   return nil
-
+    
+    if let rootController = UIApplication.shared.keyWindow?.rootViewController {
+        var currentController: UIViewController! = rootController
+        while( currentController.presentedViewController != nil ) {
+            currentController = currentController.presentedViewController
+        }
+        return currentController
+    }
+    return nil
+    
 }
