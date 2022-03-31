@@ -39,11 +39,13 @@ class ProductCard : UIView{
         let nameView = UILabel()
         nameView.text = name
         nameView.font = UIFont.boldSystemFont(ofSize: 30)
+        nameView.adjustsFontSizeToFitWidth = true
         nameView.textColor = .white
         let priceView : UILabel = {
             let priceView = UILabel()
             priceView.text = "\(price) RUB"
             priceView.textColor = .white
+            priceView.adjustsFontSizeToFitWidth = true
             priceView.font = .boldSystemFont(ofSize: 35)
             return priceView
         }()

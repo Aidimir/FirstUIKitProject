@@ -24,9 +24,11 @@ class HomeViewController : UIViewController {
             collection.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MainPageHeader")
             collection.delegate = self
             collection.dataSource = self
+            collection.layer.cornerRadius = 40
+            collection.layer.masksToBounds = true
             return collection
         }()
-        let img =  UIImage(named: "crypto")!
+        collectionView.backgroundColor = .black
         let imgView = UIImageView()
         imgView.kf.setImage(with: URL(string: "https://w0.peakpx.com/wallpaper/51/52/HD-wallpaper-apex-legend-crypto-neon.jpg"))
         imgView.contentMode = .scaleAspectFill
@@ -46,8 +48,10 @@ class HomeViewController : UIViewController {
         }
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.left.right.height.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.98)
             make.top.equalTo(mainScrolls.snp.bottom)
+            make.height.equalToSuperview().dividedBy(2.5)
         }
     }
     init(itemsToShow : [ProductCard]){
@@ -70,7 +74,7 @@ extension HomeViewController : UICollectionViewDelegateFlowLayout, UICollectionV
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/2.3, height: collectionView.frame.height/3.5)
+        return CGSize(width: self.view.frame.width/2.3, height: self.view.frame.height/3.5)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height*0.1)
