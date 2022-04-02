@@ -15,12 +15,13 @@ class CartController : UIViewController {
     var tableView = TableView()
     var dict : [String:[ProductCard]]
     var label : UILabel = {
-    var label = UILabel()
+        var label = UILabel()
         label.font = .boldSystemFont(ofSize: 40)
         label.textColor = .white
         label.textAlignment = .left
         return label
     }()
+    var button = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
         label.font = .boldSystemFont(ofSize: 30)
@@ -35,15 +36,21 @@ class CartController : UIViewController {
             make.left.right.top.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.8)
         }
-        guard let data = UserDefaults.standard.array(forKey: "cart") as? [String] else { return }
+        let data = UserDefaults.standard.array(forKey: "cart") as? [String] ?? []
         var allProductsDict = getAllProudctInOneDict(dict: dict)
         allProducts = allProductsDict
         for i in data{
             cart.append(allProducts[i]!)
         }
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-        var button = createButton()
-        label.text = "К оплате: \(getPriceForAll(productsInCart: cart)) RUB"
+        button = createButton()
+        if cart.isEmpty{
+            button.isHidden = true
+        }
+        else{
+            label.text = "К оплате: \(getPriceForAll(productsInCart: cart)) RUB"
+            button.isHidden = false
+        }
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         button.addSubview(label)
@@ -62,6 +69,12 @@ class CartController : UIViewController {
     }
     @objc func reloadPriceText(notification : NSNotification){
         label.text = "К оплате: \(getPriceForAll(productsInCart: cart)) RUB"
+        if getPriceForAll(productsInCart: cart) == 0{
+            button.isHidden = true
+        }
+        else{
+            button.isHidden = false
+        }
     }
     func createButton() -> UIView{
         let buttonView = UIView()
@@ -70,7 +83,6 @@ class CartController : UIViewController {
             button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
             return button
         }()
-        buttonView.backgroundColor = .black
         buttonView.layer.cornerRadius = 20
         buttonView.layer.masksToBounds = true
         buttonView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.25)

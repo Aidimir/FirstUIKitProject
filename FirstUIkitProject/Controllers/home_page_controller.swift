@@ -24,7 +24,7 @@ class HomeViewController : UIViewController {
             collection.register(HomeHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MainPageHeader")
             collection.delegate = self
             collection.dataSource = self
-            collection.layer.cornerRadius = 40
+            collection.layer.cornerRadius = 25
             collection.layer.masksToBounds = true
             return collection
         }()
