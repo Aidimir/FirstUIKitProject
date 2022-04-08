@@ -26,6 +26,7 @@ class TableViewCell : UITableViewCell{
     var imgView : UIImageView = {
         let imgView = UIImageView(image : UIImage())
         imgView.contentMode = .scaleAspectFit
+        imgView.tintColor = .white
         return imgView
     }()
     let nameView : UILabel = {

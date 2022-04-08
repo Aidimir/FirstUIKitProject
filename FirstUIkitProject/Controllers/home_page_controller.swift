@@ -50,7 +50,7 @@ class HomeViewController : UIViewController {
         collectionView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.98)
-            make.top.equalTo(mainScrolls.snp.bottom)
+            make.top.equalTo(mainScrolls.snp.bottom).offset(view.frame.size.height*0.02)
             make.height.equalToSuperview().dividedBy(2.5)
         }
     }

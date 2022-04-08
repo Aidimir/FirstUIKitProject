@@ -244,6 +244,7 @@
 		9D9DA480279B16C7000000B8 = {
 			isa = PBXGroup;
 			children = (
+				9D4D060D27BC19F20050DE35 /* GoogleService-Info.plist */,
 				9D9DA48B279B16C7000000B8 /* FirstUIkitProject */,
 				9D9DA4A2279B16C9000000B8 /* FirstUIkitProjectTests */,
 				9D9DA4AC279B16C9000000B8 /* FirstUIkitProjectUITests */,
@@ -270,7 +271,6 @@
 				9D4D061127C2273E0050DE35 /* Controllers */,
 				9D8CB64E27A9E5B6006AC6EB /* Views */,
 				9D8CB64D27A9E5AE006AC6EB /* Models */,
-				9D4D060D27BC19F20050DE35 /* GoogleService-Info.plist */,
 				9D9DA48C279B16C7000000B8 /* AppDelegate.swift */,
 				9D9DA48E279B16C7000000B8 /* SceneDelegate.swift */,
 				9D9DA492279B16C7000000B8 /* Main.storyboard */,

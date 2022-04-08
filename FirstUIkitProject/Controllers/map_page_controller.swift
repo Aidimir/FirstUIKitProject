@@ -11,6 +11,7 @@ import YandexMapsMobile
 import MapKit
 
 class MapPageController : UIViewController, YMKMapObjectTapListener {
+    private var openedSheet = false
     func onMapObjectTap(with mapObject: YMKMapObject, point: YMKPoint) -> Bool {
         NotificationCenter.default.post(name: NSNotification.Name("openSheet"), object: nil)
         return true
@@ -95,7 +96,13 @@ class MapPageController : UIViewController, YMKMapObjectTapListener {
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
             sheet.prefersEdgeAttachedInCompactHeight = true
         }
+        if openedSheet == false{
         present(viewControllerToPresent, animated: true, completion: nil)
+        }
+        else{
+            dismiss(animated: true)
+        }
         print("it has been tapped")
+        openedSheet = !(openedSheet)
     }
 }

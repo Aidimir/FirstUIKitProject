@@ -33,6 +33,7 @@ class ProductCard : UIView{
     func setup(image : UIImage, name : String, shortDescription : String, destinationPage : UIViewController , price : Int){
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .white
         imageView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.25)
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true

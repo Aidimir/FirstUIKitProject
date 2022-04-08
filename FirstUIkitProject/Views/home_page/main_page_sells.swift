@@ -22,12 +22,13 @@ class MainScrollSells : UIScrollView{
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = true
+        scrollView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 1)
         let view = UIView()
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         for i in content{
-            i.tintColor = .black
+            i.tintColor = .white
             i.contentMode = .scaleAspectFit
             stackView.addArrangedSubview(i)
         }
@@ -56,7 +57,6 @@ class MainScrollSells : UIScrollView{
             scrollView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
             scrollView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
         }
-        scrollView.backgroundColor = .white
         addSubview(scrollView)
         setup()
     }
